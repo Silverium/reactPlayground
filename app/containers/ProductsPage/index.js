@@ -13,13 +13,14 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {makeSelectProductsFetching,makeSelectProductsData,makeSelectProductsKO} from 'containers/App/selectors';
-import {productsLoad} from './actions';
+import { makeSelectProductsFetching, makeSelectProductsData, makeSelectProductsKO } from 'containers/App/selectors';
+import { productsLoad } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import Button from '@material-ui/core/Button';
 import ProductsList from 'components/ProductsList';
+import Typography from '@material-ui/core/Typography';
 
 
 export class ProductsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -28,7 +29,7 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
       this.props.productsLoad();
     }
     console.log(`%cvariable: this.props`, 'background-color: lime;', this.props);
-    
+
   }
 
   render() {
@@ -40,8 +41,10 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
     };
     return (
       <div>
-        <FormattedMessage {...messages.header} />
-        <Button variant="contained" color="primary" onClick={this.props.productsLoad}>Load Products </Button>
+        {/* <FormattedMessage {...messages.header} /> */}
+        <Button variant="outlined" color="primary" onClick={this.props.productsLoad}>
+            Load Products
+        </Button>
         <ProductsList {...productsListProps} />
       </div>
     );

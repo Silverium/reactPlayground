@@ -48,8 +48,26 @@ import { translationMessages } from './i18n';
 
 // Import CSS reset and Global Styles
 import './global-styles';
-// Load Roboto typeface
-require('typeface-roboto')
+// // Load Roboto typeface
+// import 'typeface-roboto';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#f05545',
+      main: '#b71c1c',
+      dark: '#7f0000',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#ffc947',
+      main: '#ff9800',
+      dark: '#c66900',
+      contrastText: '#000',
+    },
+  },
+});
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -73,7 +91,9 @@ const render = (messages) => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <MuiThemeProvider theme={theme}>
+            <App />
+          </MuiThemeProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

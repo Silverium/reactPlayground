@@ -18,6 +18,8 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
+
+
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
   margin: 0 auto;
@@ -31,10 +33,10 @@ export default function App() {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - Pullflow"
+        defaultTitle="Valessentia Solutions"
       >
-        <meta name="description" content="A React.js Boilerplate application" />
+        <meta name="description" content="Valessentia Solution's software to manage your production flow" />
       </Helmet>
       <Header />
       <Switch>

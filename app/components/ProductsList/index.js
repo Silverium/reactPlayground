@@ -5,21 +5,27 @@
 */
 
 import VesList from 'components/VesList';
-import LoadingIndicator from 'components/LoadingIndicator';
 import React from 'react';
 // import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import PropTypes from 'prop-types';
 import ProductListItem from 'containers/ProductListItem';
+import LoadingCircular from 'components/LoadingCircular';
 
-
-function ProductsList({productsFetching,productsKO,productsData,}) {
+function ProductsList({ productsFetching, productsKO, productsData, }) {
   console.log(`%cvariable: productsFetching`, 'background-color: lime;', productsFetching);
-  
+
   if (productsFetching) {
     console.log('supposedly loading products');
-    return <VesList component={LoadingIndicator} />;
+    return <VesList component={LoadingCircular} />;
+  }
+  if (productsKO !== false) {
+    // TODO: have a nice Error component and return it here
+    const ErrorComponent = () => (
+      <div> Something went wrong, please try again!</div>
+    );
+    return <VesList component={ErrorComponent} />;
   }
   if (productsData !== false) {
     return <VesList items={productsData} component={ProductListItem} />;
