@@ -20,7 +20,6 @@ import saga from './saga';
 import messages from './messages';
 import Button from '@material-ui/core/Button';
 import ProductsList from 'components/ProductsList';
-import Typography from '@material-ui/core/Typography';
 
 
 export class ProductsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
