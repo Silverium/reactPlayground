@@ -20,7 +20,8 @@ function ProductsList({ productsFetching, productsKO, productsData, }) {
 
   if (productsFetching) {
     console.log('supposedly loading products');
-    return <VesList component={LoadingCircular} />;
+    return <LoadingCircular />;
+    // return <VesList component={LoadingCircular} />;
   }
   if (productsKO !== false) {
     // TODO: have a nice Error component and return it here
@@ -48,7 +49,7 @@ function ProductsList({ productsFetching, productsKO, productsData, }) {
         field: 'description'
       },
     ];
-    return <VesTable items={productsData} headers={headers} component={TableCell} />;
+    return <VesTable items={productsData} headers={headers} />;
     // return <VesList items={productsData} component={ProductListItem} />;
   }
   return (
