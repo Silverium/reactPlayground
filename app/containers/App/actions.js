@@ -22,6 +22,7 @@ import {
   PRODUCTS_FETCH_ING,
   PRODUCTS_FETCH_OK,
   PRODUCTS_FETCH_KO,
+  TABLES_SORTBY,
 } from './constants';
 
 /**
@@ -81,6 +82,15 @@ export function repoLoadingError(error) {
 export function productsLoad() {
   return {
     type: PRODUCTS_FETCH_ING,
+    
+  };
+}
+
+
+export function sortTable(payload) {
+  return {
+    type: TABLES_SORTBY,
+    payload,
     
   };
 }

@@ -7,7 +7,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   header: {
-    id: 'app.components.VesTable.header',
-    defaultMessage: 'This is the VesTable component !',
+    id: 'app.containers.VesTable.header',
+    defaultMessage: 'This is VesTable container !',
   },
 });

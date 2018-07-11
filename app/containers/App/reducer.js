@@ -19,6 +19,7 @@ import {
   PRODUCTS_FETCH_ING,
   PRODUCTS_FETCH_OK,
   PRODUCTS_FETCH_KO,
+  TABLES_SORTBY,
 } from './constants';
 
 // The initial state of the App
@@ -32,6 +33,9 @@ const initialState = fromJS({
   productsFetching: false,
   productsKO: false,
   productsData: false,
+  tables: {
+    products: { sortBy: false, order: 'asc' }
+  }
 });
 
 function appReducer(state = initialState, action) {
@@ -63,6 +67,10 @@ function appReducer(state = initialState, action) {
     return state
         .set('productsKO', action.error)
         .set('productsFetching', false);
+  case TABLES_SORTBY:
+    return state
+        .setIn(['tables', action.payload.tableName, 'sortBy'], action.payload.sortBy)
+        .setIn(['tables', action.payload.tableName, 'order'], action.payload.order);
   default:
     return state;
   }

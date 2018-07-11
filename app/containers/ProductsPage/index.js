@@ -7,31 +7,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import VesTable from '../VesTable/Loadable';
+import Button from '@material-ui/core/Button';
 import { makeSelectProductsFetching, makeSelectProductsData, makeSelectProductsKO } from 'containers/App/selectors';
 import { productsLoad } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-import Button from '@material-ui/core/Button';
-import ProductsList from 'components/ProductsList';
+// import messages from './messages';
 
 
 export class ProductsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
+
     if (!this.props.productsData) {
+      console.log(`%cvariable: ProductsPage.props1`, 'background-color: lime;', this.props);
       this.props.productsLoad();
     }
-    console.log(`%cvariable: this.props`, 'background-color: lime;', this.props);
 
   }
 
   render() {
+    console.log(`%cvariable: ProductsPage.props2`, 'background-color: lime;', this.props);
+
     const { productsFetching, productsKO, productsData } = this.props;
     const productsListProps = {
       productsFetching,
@@ -42,9 +45,10 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
       <div>
         {/* <FormattedMessage {...messages.header} /> */}
         <Button variant="outlined" color="primary" onClick={this.props.productsLoad}>
-            Load Products
+          Load Products
         </Button>
-        <ProductsList {...productsListProps} />
+        <VesTable {...productsListProps} />
+        {/* <ProductsList {...productsListProps} /> */}
       </div>
     );
   }

@@ -34,13 +34,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   /**
    * when initial state username is not null, submit the form to load repos
    */
+  
   componentDidMount() {
     if (this.props.username && this.props.username.trim().length > 0) {
       this.props.onSubmitForm();
     }
   }
-
+  
   render() {
+    console.log(`%cvariable: this.props from HomePage`, 'background-color: lime;', this.props);
     const { loading, error, repos } = this.props;
     const reposListProps = {
       loading,
@@ -105,10 +107,14 @@ HomePage.propTypes = {
   productsLoad: PropTypes.func,
   username: PropTypes.string,
   onChangeUsername: PropTypes.func,
+  dummyData: PropTypes.object,
+
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
+    dummyData: { what: 'the vestable2 fuck' },
+
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
@@ -130,8 +136,8 @@ const mapStateToProps = createStructuredSelector({
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'home', reducer });
-const withSaga = injectSaga({ key: 'home', saga });
+const withReducer = injectReducer({ key: 'homeNameCanBeWhatever', reducer });
+const withSaga = injectSaga({ key: 'homeNameCanBeWhatever', saga });
 
 export default compose(
   withReducer,

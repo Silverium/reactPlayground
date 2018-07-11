@@ -12,8 +12,8 @@ import messages from './messages';
 import PropTypes from 'prop-types';
 import ProductListItem from 'containers/ProductListItem';
 import LoadingCircular from 'components/LoadingCircular';
-import VesTable from '../VesTable';
-import {  TableCell } from '@material-ui/core';
+import { TableCell } from '@material-ui/core';
+import { VesTable } from '../../containers/VesTable/Loadable';
 
 function ProductsList({ productsFetching, productsKO, productsData, }) {
   console.log(`%cvariable: productsFetching`, 'background-color: lime;', productsFetching);
@@ -49,7 +49,8 @@ function ProductsList({ productsFetching, productsKO, productsData, }) {
         field: 'description'
       },
     ];
-    return <VesTable items={productsData} headers={headers} />;
+
+    return (<VesTable />);
     // return <VesList items={productsData} component={ProductListItem} />;
   }
   return (

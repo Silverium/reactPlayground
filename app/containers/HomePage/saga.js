@@ -8,6 +8,7 @@ import { reposLoaded, repoLoadingError, productsOK, productsKO } from 'container
 
 import request from 'utils/request';
 import { makeSelectUsername } from 'containers/HomePage/selectors';
+import { delay } from 'redux-saga';
 
 
 export function print(text) {
@@ -43,7 +44,7 @@ export function* getProducts() {
   try {
     // Call our request helper (see 'utils/request')
     const products = (yield call(request, requestURL)).content;
-    yield new Promise(res=>setTimeout(()=>res('whatever'),3000));
+    yield call(delay,3000);
     yield put(productsOK(products));
     console.log(`%cvariable: products`, 'background-color: lime;', products);
   } catch (err) {

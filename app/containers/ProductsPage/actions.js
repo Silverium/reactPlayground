@@ -6,10 +6,12 @@
 
 import {
   DEFAULT_ACTION,
+} from './constants';
+import {
   PRODUCTS_FETCH_ING,
   PRODUCTS_FETCH_OK,
   PRODUCTS_FETCH_KO,
-} from './constants';
+} from 'containers/App/constants';
 
 export function defaultAction() {
   return {

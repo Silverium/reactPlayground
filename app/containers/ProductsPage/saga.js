@@ -1,6 +1,6 @@
 import { all, take, call, put, select, takeLatest } from 'redux-saga/effects';
-import {  PRODUCTS_FETCH_ING, } from 'containers/App/constants';
-import {  productsOK, productsKO } from 'containers/App/actions';
+import { PRODUCTS_FETCH_ING, } from 'containers/App/constants';
+import { productsOK, productsKO } from 'containers/App/actions';
 import request from 'utils/request';
 
 
@@ -10,7 +10,7 @@ export function* getProducts() {
   try {
     // Call our request helper (see 'utils/request')
     const products = (yield call(request, requestURL)).content;
-    yield new Promise(res=>setTimeout(()=>res('whatever'),3000));
+    yield new Promise(res => setTimeout(() => res('whatever'), 3000));
     yield put(productsOK(products));
     console.log(`%cvariable: products`, 'background-color: lime;', products);
   } catch (err) {

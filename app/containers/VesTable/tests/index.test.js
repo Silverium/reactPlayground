@@ -1,7 +1,7 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import VesTable from '../index';
+// import { VesTable } from '../index';
 
 describe('<VesTable />', () => {
   it('Expect to have unit tests specified', () => {

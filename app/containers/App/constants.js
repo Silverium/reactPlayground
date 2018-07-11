@@ -18,3 +18,5 @@ export const DEFAULT_LOCALE = 'en';
 export const PRODUCTS_FETCH_ING = 'pullflow/products/PRODUCTS_FETCH_ING';
 export const PRODUCTS_FETCH_OK = 'pullflow/products/PRODUCTS_FETCH_OK';
 export const PRODUCTS_FETCH_KO = 'pullflow/products/PRODUCTS_FETCH_KO';
+export const TABLES_SORTBY = 'pullflow/vesTable/TABLES_SORTBY';
+
