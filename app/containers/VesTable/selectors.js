@@ -20,8 +20,8 @@ const makeSelectVesTable = () => createSelector(
   (substate) => substate.toJS()
 );
 const makeSelectSortTable = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['tables', 'products'])
+  selectVesTableDomain,
+  (vesTable) => vesTable.get('sortTable')
 
 )
 

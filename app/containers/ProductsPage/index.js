@@ -36,10 +36,30 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
     console.log(`%cvariable: ProductsPage.props2`, 'background-color: lime;', this.props);
 
     const { productsFetching, productsKO, productsData } = this.props;
-    const productsListProps = {
+    const headers = [
+      {
+        text: 'Name',
+        field: 'name'
+      },
+      {
+        text: 'Reference',
+        field: 'ref'
+      },
+      {
+        text: 'Type',
+        field: 'type'
+      },
+      {
+        text: 'Description',
+        field: 'description'
+      },
+    ];
+    const productsVesTableProps = {
       productsFetching,
       productsKO,
       productsData,
+      headers,
+      tableName: 'products',
     };
     return (
       <div>
@@ -47,8 +67,9 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
         <Button variant="outlined" color="primary" onClick={this.props.productsLoad}>
           Load Products
         </Button>
-        <VesTable {...productsListProps} />
-        {/* <ProductsList {...productsListProps} /> */}
+        <VesTable
+          {...productsVesTableProps}
+        />
       </div>
     );
   }

@@ -18,8 +18,10 @@ function getSorting(order, orderBy) {
 
 function VesTableHead(props) {
   console.log(`%cvariable: props from VesTableHead`, 'background-color: lime;', props);
-  
-  const { headers, numSelected, rowCount, onSelectAllClick, sortTable, order, orderBy, } = props;
+
+  const { headers, numSelected, rowCount, onSelectAllClick, sortTable, tableName, order, orderBy, } = props;
+  console.log(`%cvariable: sortTable&&sortTable.get(tableName).orderBy`, 'background-color: lime;', sortTable && sortTable.get(tableName).orderBy);
+  console.log(`%cvariable: sortTable&&sortTable.get(tableName).order`, 'background-color: lime;', sortTable && sortTable.get(tableName).order);
 
   return (
     <TableHead>
@@ -35,13 +37,13 @@ function VesTableHead(props) {
           return (
             <TableCell
               key={`header-${header.field}`}
-              sortDirection={orderBy === `header-${header.field}` ? order : false}
+              sortDirection={`header-${header.field}` === sortTable && sortTable.get(tableName).orderBy ? sortTable && sortTable.get(tableName).order : false}
             >
 
               <TableSortLabel
-                active={orderBy === `header-${header.field}`}
-                direction={order}
-                onClick={props.handleSortTable(`header-${header.field}`)}
+                active={sortTable && sortTable.get(tableName).orderBy === `header-${header.field}`}
+                direction={sortTable && sortTable.get(tableName).order}
+                onClick={props.handleSortTable({ orderBy: `header-${header.field}`, tableName })}
               >
                 {header.text}
               </TableSortLabel>

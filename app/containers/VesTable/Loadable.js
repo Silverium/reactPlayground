@@ -5,10 +5,10 @@
  */
 
 import Loadable from 'react-loadable';
-import LoadingIndicator from 'components/LoadingIndicator';
+import LoadingCircular from 'components/LoadingCircular';
 
 export default Loadable({
   loader: () => import('./index'),
-  loading: LoadingIndicator,
+  loading: LoadingCircular,
 });
 

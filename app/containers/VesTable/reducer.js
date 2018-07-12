@@ -7,18 +7,20 @@
 import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
-} from './constants';
-import {
   TABLES_SORTBY,
-} from 'containers/App/constants';
-const initialState = fromJS({});
+  INIT,
+} from './constants';
+
+const initialState = fromJS({sortTable:{}});
 
 function vesTableReducer(state = initialState, action) {
   switch (action.type) {
+    case INIT:
+      return state.set(action.payload.tableName, {});
     case DEFAULT_ACTION:
       return state;
     case TABLES_SORTBY:
-      return state.set('sortBy', action.payload);
+      return state.setIn(['sortTable',action.tableName], action.payload);
     default:
       return state;
   }

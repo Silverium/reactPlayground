@@ -6,11 +6,10 @@
 
 import {
   DEFAULT_ACTION,
+  INIT,
+  TABLES_SORTBY,
 } from './constants';
 
-import {
-  TABLES_SORTBY,
-} from 'containers/App/constants';
 
 export function defaultAction() {
   return {
@@ -18,11 +17,20 @@ export function defaultAction() {
   };
 }
 
-export function sortTable(payload) {
+export function sortTable(tableName, payload) {
   console.log(`%cvariable: payload from actions`, 'background-color: lime;', payload);
   
   return {
     type: TABLES_SORTBY,
+    tableName,
+    payload,
+  };
+}
+export function initTable(payload) {
+  console.log(`%cvariable: payload from actions`, 'background-color: lime;', payload);
+  
+  return {
+    type: INIT,
     payload,
   };
 }
