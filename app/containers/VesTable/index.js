@@ -17,14 +17,19 @@ import { makeSelectSortTable } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { sortTable, initTable } from './actions';
+import { sortTable } from './actions';
 import Wrapper from './Wrapper';
-import { Table, TableBody, TableRow, TableCell, } from '@material-ui/core';
+import { Table } from '@material-ui/core';
 import VesTableHead from 'components/VesTableHead';
+import VesTableBody from 'components/VesTableBody';
 import LoadingCircular from 'components/LoadingCircular';
 
 
-
+function getSorting(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
+    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
+}
 export class VesTable extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
   }
@@ -33,33 +38,27 @@ export class VesTable extends React.PureComponent { // eslint-disable-line react
     // If we have items, render them
 
 
-    if (this.props.productsData) {
-      const  {sortTable, tableName,handleSortTable, headers, productsData} = this.props;
-      const {orderBy, order} = sortTable.get(tableName);
+    if (this.props.items) {
+      
+      const  {sortTable, handleSortTable, headers, items, tableName} = this.props;
       const vesTableHeadProps ={
         handleSortTable,
         headers,
         numSelected:0,
-        sortTable
+        sortTable,
+        tableName,
+      };
+      const { orderBy = '', order = '' } = (sortTable && sortTable.has(tableName) && sortTable.get(tableName)) || {};
+      const vesTableBodyProps = {
+        headers,
+        items: items.sort(getSorting(order, orderBy)),
       };
       content = (
         <Table>
           <VesTableHead
             {...vesTableHeadProps}
           />
-          <TableBody>
-            {productsData.map((item, i) => {
-              return (
-                <TableRow key={item._id || `row-${i}`}>
-                  {headers.map(header => {
-                    return (<TableCell key={`cell-${header.field}`}>{item[header.field]}  </TableCell>);
-                  })
-                  }
-                </TableRow>
-              );
-            })}
-
-          </TableBody>
+          <VesTableBody {...vesTableBodyProps} />
         </Table>
       );
     }
@@ -76,7 +75,7 @@ export class VesTable extends React.PureComponent { // eslint-disable-line react
 VesTable.propTypes = {
   handleSortTable: PropTypes.func,
   sortTable: PropTypes.object,
-  productsData: PropTypes.any,
+  items: PropTypes.any,
   headers: PropTypes.array,
   tableName: PropTypes.string.isRequired,
 
@@ -88,11 +87,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleSortTable: ({orderBy, tableName}) => (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      let order = 'desc';
+    handleSortTable:function ({orderBy, order, tableName}){ return (evt) => {      
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();    
       dispatch(sortTable(tableName,{ orderBy, order }));
-    },
+    };},
   };
 }
 

@@ -9,47 +9,35 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 
-
-function getSorting(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
-}
-
 function VesTableHead(props) {
-  console.log(`%cvariable: props from VesTableHead`, 'background-color: lime;', props);
-
-  const { headers, numSelected, rowCount, onSelectAllClick, sortTable, tableName, order, orderBy, } = props;
-  console.log(`%cvariable: sortTable&&sortTable.get(tableName).orderBy`, 'background-color: lime;', sortTable && sortTable.get(tableName).orderBy);
-  console.log(`%cvariable: sortTable&&sortTable.get(tableName).order`, 'background-color: lime;', sortTable && sortTable.get(tableName).order);
+  const { headers, numSelected, rowCount, onSelectAllClick, handleSortTable, sortTable, tableName, } = props;
+  const { orderBy = '', order = '' } = (sortTable && sortTable.has(tableName) && sortTable.get(tableName)) || {};
 
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
+        <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={numSelected === rowCount}
             onChange={onSelectAllClick}
           />
-        </TableCell> */}
+        </TableCell>
         {headers.map(header => {
           return (
             <TableCell
-              key={`header-${header.field}`}
-              sortDirection={`header-${header.field}` === sortTable && sortTable.get(tableName).orderBy ? sortTable && sortTable.get(tableName).order : false}
+              key={header.field}
+              sortDirection={header.field === orderBy ? order : false}
             >
 
               <TableSortLabel
-                active={sortTable && sortTable.get(tableName).orderBy === `header-${header.field}`}
-                direction={sortTable && sortTable.get(tableName).order}
-                onClick={props.handleSortTable({ orderBy: `header-${header.field}`, tableName })}
+                active={orderBy === header.field}
+                direction={order || 'asc'}
+                onClick={handleSortTable({ orderBy: header.field, tableName, order: (orderBy === header.field && order === 'asc' ? 'desc' : 'asc') })}
               >
                 {header.text}
               </TableSortLabel>
 
-
-              {/* {header.text} */}
             </TableCell>
 
           );
@@ -65,8 +53,8 @@ VesTableHead.propTypes = {
   // onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func,
   handleSortTable: PropTypes.func,
-  order: PropTypes.string,
-  orderBy: PropTypes.string,
+  tableName: PropTypes.string,
+  sortTable: PropTypes.object,
   rowCount: PropTypes.number,
 };
 

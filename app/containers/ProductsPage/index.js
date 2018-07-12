@@ -33,9 +33,7 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
   }
 
   render() {
-    console.log(`%cvariable: ProductsPage.props2`, 'background-color: lime;', this.props);
-
-    const { productsFetching, productsKO, productsData } = this.props;
+    const { productsFetching, productsKO, productsData:items } = this.props;
     const headers = [
       {
         text: 'Name',
@@ -57,7 +55,7 @@ export class ProductsPage extends React.PureComponent { // eslint-disable-line r
     const productsVesTableProps = {
       productsFetching,
       productsKO,
-      productsData,
+      items,
       headers,
       tableName: 'products',
     };
