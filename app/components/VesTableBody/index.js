@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-import {Checkbox, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Checkbox, TableBody, TableRow, TableCell } from '@material-ui/core';
 
 function VesTableBody(props) {
   const { items, headers } = props;
@@ -19,7 +19,10 @@ function VesTableBody(props) {
     <TableBody>
       {items.map((item, i) => {
         return (
-          <TableRow key={item._id || `row-${i}`}>
+          <TableRow
+            key={item._id || `row-${i}`}
+            onClick={(event)=>console.log(item, event.id)}
+          >
             <TableCell padding="checkbox">
               <Checkbox
                 checked={item.isSelected}
