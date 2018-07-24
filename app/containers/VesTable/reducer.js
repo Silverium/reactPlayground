@@ -5,10 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import {
-  DEFAULT_ACTION,
-  TABLES_SORTBY,
-} from './constants';
+import { DEFAULT_ACTION, TABLES_SORTBY } from './constants';
 
 const initialState = fromJS({ sortTable: {} });
 

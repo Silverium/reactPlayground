@@ -39,12 +39,12 @@ export class VesTable extends React.PureComponent { // eslint-disable-line react
 
 
     if (this.props.items) {
-      
-      const  {sortTable, handleSortTable, headers, items, tableName} = this.props;
-      const vesTableHeadProps ={
+
+      const { sortTable, handleSortTable, headers, items, tableName } = this.props;
+      const vesTableHeadProps = {
         handleSortTable,
         headers,
-        numSelected:0,
+        numSelected: 0,
         sortTable,
         tableName,
       };
@@ -87,10 +87,12 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleSortTable:function ({orderBy, order, tableName}){ return (evt) => {      
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();    
-      dispatch(sortTable(tableName,{ orderBy, order }));
-    };},
+    handleSortTable({ orderBy, order, tableName }) {
+      return (evt) => {
+   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+   dispatch(sortTable(tableName, { orderBy, order }));
+ };
+    },
   };
 }
 
