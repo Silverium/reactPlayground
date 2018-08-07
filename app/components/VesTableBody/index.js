@@ -15,13 +15,13 @@ import { Checkbox, TableBody, TableRow, TableCell } from '@material-ui/core';
 
 function VesTableBody(props) {
   const { items, headers } = props;
-
+  // TODO: implement the onClick in the Checkbox to add the selected item into the 'numSelected' prop
   return (
     <TableBody>
       {items.map((item, i) => (
         <TableRow
           key={item._id || `row-${i}`}
-          onClick={event => console.log(item, event.id)}
+          onClick={event => console.log(item, event.shiftKey)}
         >
           <TableCell padding="checkbox">
             <Checkbox checked={item.isSelected} />
