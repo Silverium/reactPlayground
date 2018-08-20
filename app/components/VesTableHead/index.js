@@ -1,17 +1,32 @@
 /**
-*
-* VesTableHead
-*
-*/
+ *
+ * VesTableHead
+ *
+ */
 
-import { Checkbox, TableCell, TableHead, TableRow, Tooltip, TableSortLabel } from '@material-ui/core';
+import {
+  Checkbox,
+  TableCell,
+  TableHead,
+  TableRow,
+  // Tooltip,
+  TableSortLabel,
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 function VesTableHead(props) {
-  const { headers, numSelected, rowCount, onSelectAllClick, handleSortTable, sortTable, tableName, } = props;
-  const { orderBy = '', order = '' } = (sortTable && sortTable.has(tableName) && sortTable.get(tableName)) || {};
+  const {
+    headers,
+    numSelected,
+    rowCount,
+    onSelectAllClick,
+    handleSortTable,
+    sortTable,
+    tableName,
+  } = props;
+  const { orderBy = '', order = '' } =
+    (sortTable && sortTable.has(tableName) && sortTable.get(tableName)) || {};
 
   return (
     <TableHead>
@@ -29,17 +44,21 @@ function VesTableHead(props) {
               key={header.field}
               sortDirection={header.field === orderBy ? order : false}
             >
-
               <TableSortLabel
                 active={orderBy === header.field}
                 direction={order || 'asc'}
-                onClick={handleSortTable({ orderBy: header.field, tableName, order: (orderBy === header.field && order === 'asc' ? 'desc' : 'asc') })}
+                onClick={handleSortTable({
+                  orderBy: header.field,
+                  tableName,
+                  order:
+                    orderBy === header.field && order === 'asc'
+                      ? 'desc'
+                      : 'asc',
+                })}
               >
                 {header.text}
               </TableSortLabel>
-
             </TableCell>
-
           );
         })}
       </TableRow>

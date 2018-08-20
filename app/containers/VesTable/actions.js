@@ -8,8 +8,8 @@ import {
   DEFAULT_ACTION,
   TABLES_SORTBY,
   SELECT_ALL,
+  SELECT_ROW,
 } from './constants';
-
 
 export function defaultAction(payload) {
   return {
@@ -17,14 +17,23 @@ export function defaultAction(payload) {
     payload,
   };
 }
-export function selectAll(payload) {
+export function selectAll(tableName, payload) {
   return {
     type: SELECT_ALL,
+    tableName,
     payload,
   };
 }
 
-export function sortTable(tableName, payload) {  
+export function selectRow(tableName, payload) {
+  return {
+    type: SELECT_ROW,
+    tableName,
+    payload,
+  };
+}
+
+export function sortTable(tableName, payload) {
   return {
     type: TABLES_SORTBY,
     tableName,

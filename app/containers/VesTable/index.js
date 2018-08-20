@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -16,8 +16,8 @@ import injectReducer from 'utils/injectReducer';
 import { makeSelectSortTable } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-import { sortTable } from './actions';
+// import messages from './messages';
+import { sortTable, selectRow } from './actions';
 import Wrapper from './Wrapper';
 import { Table } from '@material-ui/core';
 import VesTableHead from 'components/VesTableHead';
@@ -41,15 +41,18 @@ export class VesTable extends React.PureComponent {
         sortTable,
         handleSortTable,
         onSelectAllClick,
+        onSelectRow,
         headers,
         items,
         tableName,
       } = this.props;
+      const numSelected = 0;
+
       const vesTableHeadProps = {
         handleSortTable,
         onSelectAllClick,
         headers,
-        numSelected: 0,
+        numSelected,
         sortTable,
         tableName,
       };
@@ -58,6 +61,9 @@ export class VesTable extends React.PureComponent {
         {};
       const vesTableBodyProps = {
         headers,
+        numSelected,
+        onSelectRow,
+        tableName,
         items: items.sort(getSorting(order, orderBy)),
       };
       content = (
@@ -74,6 +80,7 @@ export class VesTable extends React.PureComponent {
 VesTable.propTypes = {
   handleSortTable: PropTypes.func,
   onSelectAllClick: PropTypes.func,
+  onSelectRow: PropTypes.func,
   sortTable: PropTypes.object,
   items: PropTypes.any,
   headers: PropTypes.array,
@@ -94,6 +101,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSelectAllClick() {
       console.log('All selected clicked!');
+    },
+    onSelectRow(tableName, item) {
+      dispatch(selectRow(tableName, item));
     },
   };
 }
