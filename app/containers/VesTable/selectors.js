@@ -13,7 +13,6 @@ const selectVesTableDomain = state => state.get('vesTable');
 /**
  * Default selector used by VesTable
  */
-
 // const makeSelectVesTable = () =>
 //   createSelector(selectVesTableDomain, substate => substate.toJS());
 const makeSelectSortTable = () =>
