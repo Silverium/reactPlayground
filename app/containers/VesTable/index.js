@@ -13,7 +13,7 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectSortTable } from './selectors';
+import { makeSelectSortTable, makeSelectSelected } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
@@ -45,8 +45,11 @@ export class VesTable extends React.PureComponent {
         headers,
         items,
         tableName,
+        selected,
       } = this.props;
       const numSelected = 0;
+      // console.log(`%cvariable: selected`, 'background-color: lime;', selected);
+      const selectedItems = selected.get(tableName);
 
       const vesTableHeadProps = {
         handleSortTable,
@@ -64,6 +67,7 @@ export class VesTable extends React.PureComponent {
         numSelected,
         onSelectRow,
         tableName,
+        selected: selectedItems,
         items: items.sort(getSorting(order, orderBy)),
       };
       content = (
@@ -84,11 +88,13 @@ VesTable.propTypes = {
   sortTable: PropTypes.object,
   items: PropTypes.any,
   headers: PropTypes.array,
+  selected: PropTypes.object,
   tableName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   sortTable: makeSelectSortTable(),
+  selected: makeSelectSelected(),
 });
 
 function mapDispatchToProps(dispatch) {

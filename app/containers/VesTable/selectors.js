@@ -17,7 +17,7 @@ const selectVesTableDomain = state => state.get('vesTable');
 //   createSelector(selectVesTableDomain, substate => substate.toJS());
 const makeSelectSortTable = () =>
   createSelector(selectVesTableDomain, vesTable => vesTable.get('sortTable'));
-const makeSelectSelection = () =>
-  createSelector(selectVesTableDomain, vesTable => vesTable.get('selection'));
+const makeSelectSelected = () =>
+  createSelector(selectVesTableDomain, vesTable => vesTable.get('selected'));
 
-export { makeSelectSortTable, makeSelectSelection };
+export { makeSelectSortTable, makeSelectSelected };

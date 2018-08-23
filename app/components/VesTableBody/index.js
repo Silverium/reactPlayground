@@ -14,7 +14,15 @@ import PropTypes from 'prop-types';
 import { Checkbox, TableBody, TableRow, TableCell } from '@material-ui/core';
 
 function VesTableBody(props) {
-  const { items, headers, /* numSelected, */ onSelectRow, tableName } = props;
+  const {
+    items,
+    headers,
+    /* numSelected, */ selected,
+    onSelectRow,
+    tableName,
+  } = props;
+  // console.log(`%cvariable: selected`, 'background-color: lime;', selected);
+
   // TODO: implement the onClick in the Checkbox to add the selected item into the 'numSelected' prop
   return (
     <TableBody>
@@ -25,7 +33,9 @@ function VesTableBody(props) {
         >
           <TableCell padding="checkbox">
             <Checkbox
-              checked={item.isSelected}
+              checked={
+                selected && selected.has(item._id) && selected.get(item._id)
+              }
               onClick={event => onSelectRow(tableName, item, event)}
             />
           </TableCell>
@@ -43,6 +53,7 @@ function VesTableBody(props) {
 VesTableBody.propTypes = {
   items: PropTypes.array,
   headers: PropTypes.array,
+  selected: PropTypes.object,
   numSelected: PropTypes.number,
   onSelectRow: PropTypes.func,
   tableName: PropTypes.string,
