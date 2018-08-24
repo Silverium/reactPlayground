@@ -4,28 +4,28 @@
  *
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from "reselect";
-import { compose } from "redux";
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
-import { makeSelectSortTable, makeSelectSelected } from "./selectors";
-import reducer from "./reducer";
-import saga from "./saga";
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import { makeSelectSortTable } from './selectors';
+import reducer from './reducer';
+import saga from './saga';
 // import messages from './messages';
-import { sortTable, selectRow } from "./actions";
-import Wrapper from "./Wrapper";
-import { Table } from "@material-ui/core";
-import VesTableHead from "components/VesTableHead";
-import VesTableBody from "components/VesTableBody";
-import LoadingCircular from "components/LoadingCircular";
+import { sortTable, selectRow } from './actions';
+import Wrapper from './Wrapper';
+import { Table } from '@material-ui/core';
+import VesTableHead from 'components/VesTableHead';
+import VesTableBody from 'components/VesTableBody';
+import LoadingCircular from 'components/LoadingCircular';
 
 function getSorting(order, orderBy) {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
     : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
 }
@@ -45,11 +45,11 @@ export class VesTable extends React.PureComponent {
         headers,
         items,
         tableName,
-        selected
+        // selected
       } = this.props;
       const numSelected = 0;
       // console.log(`%cvariable: selected`, 'background-color: lime;', selected);
-      const selectedItems = selected.get(tableName);
+      // const selectedItems = selected.get(tableName);
 
       const vesTableHeadProps = {
         handleSortTable,
@@ -59,7 +59,7 @@ export class VesTable extends React.PureComponent {
         sortTable,
         tableName
       };
-      const { orderBy = "_id", order = "" } =
+      const { orderBy = '_id', order = '' } =
         (sortTable && sortTable.get(tableName)) ||
         {};
       const vesTableBodyProps = {
@@ -68,7 +68,7 @@ export class VesTable extends React.PureComponent {
         onSelectRow,
         tableName,
         // selected: selectedItems,
-        items: items.sort(getSorting(order, orderBy)).map(item => Object.assign(item, { isChecked: selectedItems && selectedItems.get(item._id) }))
+        items: items.sort(getSorting(order, orderBy))
       };
       content = (
         <Table>
@@ -88,13 +88,13 @@ VesTable.propTypes = {
   sortTable: PropTypes.object,
   items: PropTypes.any,
   headers: PropTypes.array,
-  selected: PropTypes.object,
+  // selected: PropTypes.object,
   tableName: PropTypes.string.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
   sortTable: makeSelectSortTable(),
-  selected: makeSelectSelected()
+  // selected: makeSelectSelected()
 });
 
 function mapDispatchToProps(dispatch) {
@@ -106,7 +106,7 @@ function mapDispatchToProps(dispatch) {
       };
     },
     onSelectAllClick() {
-      console.log("All selected clicked!");
+      console.log('All selected clicked!');
     },
     onSelectRow(tableName, item) {
       dispatch(selectRow(tableName, item));
@@ -119,8 +119,8 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: "vesTable", reducer });
-const withSaga = injectSaga({ key: "vesTable", saga });
+const withReducer = injectReducer({ key: 'vesTable', reducer });
+const withSaga = injectSaga({ key: 'vesTable', saga });
 
 export default compose(
   withReducer,

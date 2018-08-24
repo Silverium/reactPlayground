@@ -1,8 +1,8 @@
-import { all, take, call, put, select, takeLatest } from 'redux-saga/effects';
+import { all,/*  take, */ call, put,/*  select, */ takeLatest } from 'redux-saga/effects';
 import { PRODUCTS_FETCH_ING, } from 'containers/App/constants';
 import { productsOK, productsKO } from 'containers/App/actions';
 import request from 'utils/request';
-import { delay } from 'redux-saga';
+// import { delay } from 'redux-saga';
 
 
 export function* getProducts() {
