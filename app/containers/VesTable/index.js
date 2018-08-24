@@ -26,8 +26,8 @@ import LoadingCircular from 'components/LoadingCircular';
 
 function getSorting(order, orderBy) {
   return order === 'desc'
-    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
+    ? (a, b) => ((b[orderBy] || '') < (a[orderBy] || '') ? -1 : 1)
+    : (a, b) => ((a[orderBy] || '') < (b[orderBy] || '') ? -1 : 1);
 }
 export class VesTable extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -59,7 +59,7 @@ export class VesTable extends React.PureComponent {
         sortTable,
         tableName
       };
-      const { orderBy = '_id', order = '' } =
+      const { orderBy = '_id', order = 'asc' } =
         (sortTable && sortTable.get(tableName)) ||
         {};
       const vesTableBodyProps = {
@@ -67,9 +67,9 @@ export class VesTable extends React.PureComponent {
         numSelected,
         onSelectRow,
         tableName,
-        // selected: selectedItems,
-        items: items.sort(getSorting(order, orderBy))
+        items: [...items].sort(getSorting(order, orderBy)),
       };
+
       content = (
         <Table>
           <VesTableHead {...vesTableHeadProps} />

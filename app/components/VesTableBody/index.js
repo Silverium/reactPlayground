@@ -25,6 +25,7 @@ function VesTableBody(props) {
     headers,
     tableName,
   } = props;
+  console.log(`%cvesTableBody is rendered`, 'background-color: gold;');
 
   // TODO: implement the onClick in the Checkbox to add the selected item into the 'numSelected' prop
   return (
