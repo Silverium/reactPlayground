@@ -9,7 +9,7 @@ import {
   DEFAULT_ACTION,
   TABLES_SORTBY,
   SELECT_ALL,
-  SELECT_ROW,
+  SELECT_ROW
 } from './constants';
 
 const initialState = fromJS({ sortTable: {}, selected: {}, numTest: 0 });
@@ -22,8 +22,11 @@ function vesTableReducer(state = initialState, action) {
         `%ctable ${action.tableName} was undefined. Initialized now`,
         'background-color: gold;'
       );
-      state.setIn(['selected', action.tableName, action.payload._id], true);
-      return;
+      return state.setIn(
+        ['selected',
+          action.tableName, action.payload._id],
+        true
+      );
     }
 
     const item = currentTable.has(action.payload._id);
@@ -33,21 +36,23 @@ function vesTableReducer(state = initialState, action) {
         false
       );
     } else {
-      state.setIn(['selected', action.tableName, action.payload._id], true);
-      return;
+      return state.setIn(
+        ['selected', action.tableName, action.payload._id],
+        true
+      );
     }
   }
   switch (action.type) {
-  case DEFAULT_ACTION:
-    return state;
-  case TABLES_SORTBY:
-    return state.setIn(['sortTable', action.tableName], action.payload);
-  case SELECT_ALL:
-    return state.setIn(['sortTable', action.tableName], action.payload);
-  case SELECT_ROW:
-    return selectRow();
-  default:
-    return state;
+    case DEFAULT_ACTION:
+      return state;
+    case TABLES_SORTBY:
+      return state.setIn(['sortTable', action.tableName], action.payload);
+    case SELECT_ALL:
+      return state.setIn(['sortTable', action.tableName], action.payload);
+    case SELECT_ROW:
+      return selectRow();
+    default:
+      return state;
   }
 }
 

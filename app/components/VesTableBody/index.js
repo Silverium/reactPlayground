@@ -17,7 +17,8 @@ function VesTableBody(props) {
   const {
     items,
     headers,
-    /* numSelected, */ selected,
+    /* numSelected, */
+    // selected,
     onSelectRow,
     tableName,
   } = props;
@@ -29,14 +30,21 @@ function VesTableBody(props) {
       {items.map((item, i) => (
         <TableRow
           key={item._id || `row-${i}`}
-          onClick={event => console.log(`clicked ${item.ref}`, event)}
+          onClick={(/* event */) => console.log(`clicked ${item.ref}`, item)}
         >
           <TableCell padding="checkbox">
             <Checkbox
               checked={
-                selected && selected.has(item._id) && selected.get(item._id)
+                item.isChecked
+                /* selected && selected.has(item._id) && selected.get(item._id) */
               }
-              onClick={event => onSelectRow(tableName, item, event)}
+              onClick={
+                () => {
+                  (item.isChecked = !item.isChecked);
+
+                  onSelectRow(tableName, item, event)
+                }
+              }
             />
           </TableCell>
           {headers.map(header => (
@@ -53,7 +61,7 @@ function VesTableBody(props) {
 VesTableBody.propTypes = {
   items: PropTypes.array,
   headers: PropTypes.array,
-  selected: PropTypes.object,
+  // selected: PropTypes.object,
   numSelected: PropTypes.number,
   onSelectRow: PropTypes.func,
   tableName: PropTypes.string,
