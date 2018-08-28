@@ -23,10 +23,10 @@ import { Paper, Table } from '@material-ui/core';
 import VesTableHead from 'components/VesTableHead';
 import VesTableBody from 'components/VesTableBody';
 import LoadingCircular from 'components/LoadingCircular';
-import VesTableToolbar from '../../components/VesTableToolbar';
+import VesTableToolbar from 'components/VesTableToolbar';
 import { withStyles } from '@material-ui/core/styles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import VesTableFooter from 'components/VesTableFooter';
+import VesTableFooter from 'containers/VesTableFooter';
 
 
 
