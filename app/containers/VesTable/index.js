@@ -23,6 +23,7 @@ import { Table } from '@material-ui/core';
 import VesTableHead from 'components/VesTableHead';
 import VesTableBody from 'components/VesTableBody';
 import LoadingCircular from 'components/LoadingCircular';
+import VesTableFooter from 'containers/VesTableFooter';
 
 function getSorting(order, orderBy) {
   return order === 'desc'
@@ -44,7 +45,7 @@ export class VesTable extends React.PureComponent {
         onSelectRow,
         headers,
         items,
-        tableName,
+        tableName
         // selected
       } = this.props;
       const numSelected = 0;
@@ -60,21 +61,27 @@ export class VesTable extends React.PureComponent {
         tableName
       };
       const { orderBy = '_id', order = 'asc' } =
-        (sortTable && sortTable.get(tableName)) ||
-        {};
+        (sortTable && sortTable.get(tableName)) || {};
       const vesTableBodyProps = {
         headers,
         numSelected,
         onSelectRow,
         tableName,
-        items: [...items].sort(getSorting(order, orderBy)),
+        items: [...items].sort(getSorting(order, orderBy))
+      };
+      const vesTableFooterProps = {
+        count: items.length,
       };
 
       content = (
-        <Table>
-          <VesTableHead {...vesTableHeadProps} />
-          <VesTableBody {...vesTableBodyProps} />
-        </Table>
+        <div>
+          <Table>
+            <VesTableHead {...vesTableHeadProps} />
+            <VesTableBody {...vesTableBodyProps} />
+          </Table>
+          <VesTableFooter {...vesTableFooterProps} />
+
+        </div>
       );
     }
     return <Wrapper>{content}</Wrapper>;
@@ -93,7 +100,7 @@ VesTable.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  sortTable: makeSelectSortTable(),
+  sortTable: makeSelectSortTable()
   // selected: makeSelectSelected()
 });
 
