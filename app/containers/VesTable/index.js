@@ -77,6 +77,9 @@ export class VesTable extends React.PureComponent {
       const vesTableFooterProps = {
         count: items.length,
       };
+      const vesTableToolbarProps = {
+        tableName
+      };
       const toolbarStyles = theme => ({
         root: {
           paddingRight: theme.spacing.unit,
@@ -106,7 +109,7 @@ export class VesTable extends React.PureComponent {
 
       content = (
         <Paper >
-          <VesTableToolbar></VesTableToolbar>
+          <VesTableToolbar {...vesTableToolbarProps}></VesTableToolbar>
           <Table>
             <VesTableHead {...vesTableHeadProps} />
             <VesTableBody {...vesTableBodyProps} />
