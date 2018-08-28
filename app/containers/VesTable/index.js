@@ -19,10 +19,15 @@ import saga from './saga';
 // import messages from './messages';
 import { sortTable, selectRow } from './actions';
 import Wrapper from './Wrapper';
-import { Table } from '@material-ui/core';
+import { Paper, Table } from '@material-ui/core';
 import VesTableHead from 'components/VesTableHead';
 import VesTableBody from 'components/VesTableBody';
 import LoadingCircular from 'components/LoadingCircular';
+import VesTableToolbar from '../../components/VesTableToolbar';
+import { withStyles } from '@material-ui/core/styles';
+import { lighten } from '@material-ui/core/styles/colorManipulator';
+
+
 
 function getSorting(order, orderBy) {
   return order === 'desc'
@@ -69,12 +74,42 @@ export class VesTable extends React.PureComponent {
         tableName,
         items: [...items].sort(getSorting(order, orderBy)),
       };
+      const toolbarStyles = theme => ({
+        root: {
+          paddingRight: theme.spacing.unit,
+        },
+        highlight:
+          theme.palette.type === 'light'
+            ? {
+              color: theme.palette.secondary.main,
+              backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+            }
+            : {
+              color: theme.palette.text.primary,
+              backgroundColor: theme.palette.secondary.dark,
+            },
+        spacer: {
+          flex: '1 1 100%',
+        },
+        actions: {
+          color: theme.palette.text.secondary,
+        },
+        title: {
+          flex: '0 0 auto',
+        },
+      });
+
+      const StyledToolbar = withStyles(toolbarStyles)(VesTableToolbar);
 
       content = (
-        <Table>
-          <VesTableHead {...vesTableHeadProps} />
-          <VesTableBody {...vesTableBodyProps} />
-        </Table>
+        <Paper >
+          <VesTableToolbar></VesTableToolbar>
+          <Table>
+            <VesTableHead {...vesTableHeadProps} />
+            <VesTableBody {...vesTableBodyProps} />
+          </Table>
+
+        </Paper>
       );
     }
     return <Wrapper>{content}</Wrapper>;
