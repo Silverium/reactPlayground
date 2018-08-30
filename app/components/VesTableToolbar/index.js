@@ -11,10 +11,9 @@ import React from 'react';
 // import messages from './messages';
 import PropTypes from 'prop-types';
 // import classNames from 'classnames';
-import { Toolbar, Typography, IconButton, } from '@material-ui/core';
+import { Tooltip, Toolbar, Typography, IconButton, } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Tooltip from 'react-tooltip';
 
 
 export class VesTableToolbar extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -23,7 +22,6 @@ export class VesTableToolbar extends React.PureComponent { // eslint-disable-lin
 
     return (
       <Toolbar>
-        <Tooltip></Tooltip>
         <div >
           {numSelected > 0 ? (
             <Typography color="inherit" variant="subheading">
@@ -35,8 +33,12 @@ export class VesTableToolbar extends React.PureComponent { // eslint-disable-lin
               </Typography>
             )}
         </div>
-        <p data-tip="hello world">Tooltip</p>
+
         <div>
+        <Tooltip title='hello tooltip'>
+
+        <p data-tip="hello world">Tooltip</p>
+        </Tooltip>
         </div>
         <div >
           {numSelected > 0 ? (

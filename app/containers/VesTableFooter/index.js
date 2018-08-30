@@ -10,12 +10,11 @@ import { connect } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
 import injectReducer from 'utils/injectReducer';
 import { makeSelectVesTableFooter, makeSelectVesTableFooterPage, makeSelectVesTableFooterRowsPerPage } from './selectors';
 import reducer from './reducer';
 // import messages from './messages';
-import TablePagination from '@material-ui/core/TablePagination';
+import { FormControl, MenuItem, Select, InputLabel } from '@material-ui/core';
 import { updateRowsPerPage } from './actions';
 
 export class VesTableFooter extends React.PureComponent {
@@ -36,20 +35,24 @@ export class VesTableFooter extends React.PureComponent {
       page,
     } = this.props;
     return (
-      <TablePagination
-        component="div"
-        count={count}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        backIconButtonProps={{
-          'aria-label': 'Previous Page',
-        }}
-        nextIconButtonProps={{
-          'aria-label': 'Next Page',
-        }}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      <FormControl >
+        <InputLabel htmlFor="age-simple">Age</InputLabel>
+        <Select
+          value={rowsPerPage}
+          onChange={handleChangeRowsPerPage}
+          inputProps={{
+            name: 'Rows per Page',
+            id: 'RowsPerPage',
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={30}>30</MenuItem>
+        </Select>
+      </FormControl>
     );
   }
 }
@@ -73,9 +76,11 @@ function mapDispatchToProps(dispatch) {
   console.log('mapDispatchToProps from VesTableFooter');
   return {
     handleChangePage(event) {
-      return () => console.log('change page event', event);
+      return console.log('change page event', event);
     },
     handleChangeRowsPerPage(event) {
+      console.log(`%cvariable: event.target.value`, 'background-color: lime;', event.target.value);
+
       dispatch(updateRowsPerPage, event.target.value);
     },
   };

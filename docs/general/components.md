@@ -7,7 +7,7 @@ Since all the files kept in the same folder, this should be a breeze.
 ## When?
 
 Often when working on a project, you find you've created a component that you
-could use is other upcoming projects. You would like to extract that
+could use in other upcoming projects. You would like to extract that
 component to its own git repository and npm package since keeping the version
 histories separate makes a lot of sense.
 
@@ -26,10 +26,10 @@ Npm has a great feature that allows this kind of parallel development of
 packages - `npm link` (read more [here](https://docs.npmjs.com/cli/link)). After
 setting up your new package, you can link it into your main package like this:
 
- 1. `cd` into your new package directory
- 2. Run `npm link`
- 3. `cd` into your main project directory
- 4. Run `npm link <new-package>`
+1.  `cd` into your new package directory
+2.  Run `npm link`
+3.  `cd` into your main project directory
+4.  Run `npm link <new-package>`
 
 ### Configuration
 
