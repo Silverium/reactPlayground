@@ -27,6 +27,7 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import configureStore from './configureStore';
 
 // Import i18n messages
@@ -36,7 +37,6 @@ import { translationMessages } from './i18n';
 import './global-styles';
 // // Load Roboto typeface
 // import 'typeface-roboto';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -60,11 +60,14 @@ const theme = createMuiTheme({
 const robotoObserver = new FontFaceObserver('Roboto', {});
 
 // When Open Sans is loaded, add a font-family using Open Sans to the body
-robotoObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-}, () => {
-  document.body.classList.remove('fontLoaded');
-});
+robotoObserver.load().then(
+  () => {
+    document.body.classList.add('fontLoaded');
+  },
+  () => {
+    document.body.classList.remove('fontLoaded');
+  },
+);
 
 // Create redux store with history
 const initialState = {};
@@ -72,7 +75,7 @@ const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-const render = (messages) => {
+const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
@@ -83,7 +86,7 @@ const render = (messages) => {
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
-    MOUNT_NODE
+    MOUNT_NODE,
   );
 };
 
@@ -99,15 +102,19 @@ if (module.hot) {
 
 // Chunked polyfill for browsers without Intl support
 if (!window.Intl) {
-  (new Promise((resolve) => {
+  new Promise(resolve => {
+    /*eslint-disable */
     resolve(import('intl'));
-  }))
-    .then(() => Promise.all([
-      import('intl/locale-data/jsonp/en.js'),
-      import('intl/locale-data/jsonp/de.js'),
-    ]))
+    /* eslint-enable */
+  })
+    .then(() =>
+      Promise.all([
+        import('intl/locale-data/jsonp/en.js'),
+        import('intl/locale-data/jsonp/de.js'),
+      ]),
+    )
     .then(() => render(translationMessages))
-    .catch((err) => {
+    .catch(err => {
       throw err;
     });
 } else {
@@ -120,4 +127,4 @@ if (!window.Intl) {
 if (process.env.NODE_ENV === 'production') {
   require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 }
-import('../server/prototyping')
+import('../server/prototyping');
