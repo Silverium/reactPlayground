@@ -13,12 +13,7 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectSortTable } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
 // import messages from './messages';
-import { sortTable, selectRow } from './actions';
-import Wrapper from './Wrapper';
 import { Paper, Table } from '@material-ui/core';
 import VesTableHead from 'components/VesTableHead';
 import VesTableBody from 'components/VesTableBody';
@@ -27,8 +22,11 @@ import VesTableToolbar from 'components/VesTableToolbar';
 import { withStyles } from '@material-ui/core/styles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import VesTableFooter from 'containers/VesTableFooter';
-
-
+import Wrapper from './Wrapper';
+import { sortTable, selectRow } from './actions';
+import saga from './saga';
+import reducer from './reducer';
+import { makeSelectSortTable } from './selectors';
 
 function getSorting(order, orderBy) {
   return order === 'desc'
@@ -38,22 +36,22 @@ function getSorting(order, orderBy) {
 export class VesTable extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   componentDidMount() { }
+
   render() {
     let content = <LoadingCircular />;
     // If we have items, render them
 
     if (this.props.items) {
       const {
-        sortTable,
+        sorting,
         handleSortTable,
         onSelectAllClick,
         onSelectRow,
         headers,
         items,
-        tableName
-        // selected
+        tableName,
       } = this.props;
-      const numSelected = 0;
+      const numSelected = 2;
       // console.log(`%cvariable: selected`, 'background-color: lime;', selected);
       // const selectedItems = selected.get(tableName);
 
@@ -62,23 +60,24 @@ export class VesTable extends React.PureComponent {
         onSelectAllClick,
         headers,
         numSelected,
-        sortTable,
-        tableName
+        sorting,
+        tableName,
       };
       const { orderBy = '_id', order = 'asc' } =
-        (sortTable && sortTable.get(tableName)) || {};
+        (sorting && sorting.get(tableName)) || {};
       const vesTableBodyProps = {
         headers,
         numSelected,
         onSelectRow,
         tableName,
-        items: [...items].sort(getSorting(order, orderBy))
+        items: [...items].sort(getSorting(order, orderBy)),
       };
       const vesTableFooterProps = {
         count: items.length,
       };
       const vesTableToolbarProps = {
-        tableName
+        tableName,
+        numSelected
       };
       const toolbarStyles = theme => ({
         root: {
@@ -105,11 +104,11 @@ export class VesTable extends React.PureComponent {
         },
       });
 
-      withStyles(toolbarStyles)(VesTableToolbar);
+      const Toolbar = withStyles(toolbarStyles)(VesTableToolbar);
 
       content = (
-        <Paper >
-          <VesTableToolbar {...vesTableToolbarProps}></VesTableToolbar>
+        <Paper>
+          <Toolbar {...vesTableToolbarProps} />
           <Table>
             <VesTableHead {...vesTableHeadProps} />
             <VesTableBody {...vesTableBodyProps} />
@@ -117,8 +116,6 @@ export class VesTable extends React.PureComponent {
 
           <VesTableFooter {...vesTableFooterProps} />
         </Paper>
-
-
       );
     }
     return <Wrapper>{content}</Wrapper>;
@@ -129,15 +126,15 @@ VesTable.propTypes = {
   handleSortTable: PropTypes.func,
   onSelectAllClick: PropTypes.func,
   onSelectRow: PropTypes.func,
-  sortTable: PropTypes.object,
+  sorting: PropTypes.object,
   items: PropTypes.any,
   headers: PropTypes.array,
   // selected: PropTypes.object,
-  tableName: PropTypes.string.isRequired
+  tableName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  sortTable: makeSelectSortTable()
+  sorting: makeSelectSortTable(),
   // selected: makeSelectSelected()
 });
 
@@ -154,13 +151,13 @@ function mapDispatchToProps(dispatch) {
     },
     onSelectRow(tableName, item) {
       dispatch(selectRow(tableName, item));
-    }
+    },
   };
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 
 const withReducer = injectReducer({ key: 'vesTable', reducer });
@@ -169,5 +166,5 @@ const withSaga = injectSaga({ key: 'vesTable', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(VesTable);

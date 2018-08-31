@@ -12,7 +12,7 @@ import {
   SELECT_ROW
 } from './constants';
 
-const initialState = fromJS({ sortTable: {}, selected: {}, numTest: 0 });
+const initialState = fromJS({ sorting: {}, selected: {}, numTest: 0 });
 
 function vesTableReducer(state = initialState, action) {
   function selectRow() {
@@ -46,9 +46,9 @@ function vesTableReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case TABLES_SORTBY:
-      return state.setIn(['sortTable', action.tableName], action.payload);
+      return state.setIn(['sorting', action.tableName], action.payload);
     case SELECT_ALL:
-      return state.setIn(['sortTable', action.tableName], action.payload);
+      return state.setIn(['sorting', action.tableName], action.payload);
     case SELECT_ROW:
       return selectRow();
     default:

@@ -22,11 +22,11 @@ function VesTableHead(props) {
     rowCount,
     onSelectAllClick,
     handleSortTable,
-    sortTable,
+    sorting,
     tableName,
   } = props;
   const { orderBy = '', order = '' } =
-    (sortTable && sortTable.has(tableName) && sortTable.get(tableName)) || {};
+    (sorting && sorting.has(tableName) && sorting.get(tableName)) || {};
 
   return (
     <TableHead>
@@ -73,7 +73,7 @@ VesTableHead.propTypes = {
   onSelectAllClick: PropTypes.func,
   handleSortTable: PropTypes.func,
   tableName: PropTypes.string,
-  sortTable: PropTypes.object,
+  sorting: PropTypes.object,
   rowCount: PropTypes.number,
 };
 
